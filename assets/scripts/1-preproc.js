@@ -14,14 +14,7 @@
  */
 function domainColor(color, data) {
   // TODO: Specify the color scale for each BIXI station by assigning each station a distinct color.
-  var i
-  let stationsName = []
-
-  for(i = 0; i < 10; ++i)
-  {
-    stationsName[i] = data[i].name
-  }
-  color.domain(stationsName)
+  color.domain(data.map(d => d.name))
 }
 
 /**
@@ -32,15 +25,7 @@ function domainColor(color, data) {
  */
 function domainX(x, data) {
   // TODO: Specify the domain for variable "x" by associating only the used BIXI stations.
-  var i
-  var stationsUsed = []
-
-  for (i = 0; i < 10; ++i)
-  {
-    stationsUsed[i] = data[i].name
-  }
-  x.domain(stationsUsed)
-
+  x.domain(data.map(d => d.name))
 }
 
 /**
@@ -51,26 +36,10 @@ function domainX(x, data) {
  */
 function domainY(y, currentData) {
   // TODO: Specifies the domain for the "y" axis by taking the minimum and maximum values as the number of trips to a BIXI station.
-  var j
-  var i
-  var min = 10000
-  var max = 0
-
-  for(i = 0; i < 10; ++i)
-  {
-    for(j = 0; j < 10; ++j)
-    {
-      if(currentData.destinations[i].count[j] < min)
-      {
-        min = currentData.destinations[i].count[j]
-      }
-      if(currentData.destinations[i].count[j] > max)
-      {
-        max = currentData.destinations[i].count[j]
-      }
-    }
-  }
-  y.domain([min,max])
+  var counts = currentData.destinations.map(d => d.count)
+  var maxTraj = d3.max(counts)
+  var minTraj = d3.min(counts) 
+  y.domain([minTraj, maxTraj])
 }
 
 /**
@@ -81,19 +50,7 @@ function domainY(y, currentData) {
  */
 function getMatrix(data) {
   // TODO: Calculate the adjacency matrix to create the chord diagram.
-  var adjMatrix = []
-
-  data.forEach(function(dataset1)
-  {
-    var line = []
-    dataset1.destinations.forEach(function(dataset2)
-    {
-      line.push(dataset2.count)
-    })
-    adjMatrix.push(line)
-  }
-  )
-  return adjMatrix;
+  return data.map(dest => dest.destinations.map(d => d.count))
 }
 
 /**
@@ -103,16 +60,5 @@ function getMatrix(data) {
  */
 function getTotal(data) {
   // TODO: Calculate the total number of trips done on August 2015.
-  var i
-  var j
-  var totalTrips = 0
-
-  data.forEach(function(dataset1){
-    dataset1.destinations.forEach(function(dataset2)
-    {
-      totalTrips = totalTrips + dataset2.count
-    })
-  }
-  )
-  return totalTrips;
+  return d3.sum(data.map(d => d3.sum(d.destinations.map(dest => dest.count))))
 }
