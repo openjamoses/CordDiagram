@@ -28,7 +28,7 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
   var groups = g.selectAll("g")
   .data(layout.groups)
   .enter()
-  
+
   groups.append("path")
   .attr("id", d => "group" + d.index)
   .style("fill", d => color(data[d.index].name))
@@ -36,7 +36,7 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
   .attr("d", arc)
   .classed("group", true)
   .append("svg:title")
-  .text(d => titleGroup(data, d, total, formatPercent)) 
+  .text(d => titleGroup(data, d, total, formatPercent))
 
 
   groups.append("text")
@@ -44,7 +44,7 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
   .attr("dy", 15)
   .append("textPath")
   .classed("text", true)
-  .attr("xlink:href", d => "#group" + d.index) 
+  .attr("xlink:href", d => "#group" + d.index)
   .text(d => tronc(data[d.index].name))
   .style("fill", "white")
   .style("font-size", "12px")
@@ -52,7 +52,7 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
 }
 /**
  * Function that truncates station names «Métro Mont-Royal (Rivard/Mont-Royal)» et «Pontiac / Gilford».
- * 
+ *
  * @param name    Le nom de la station qui doit etre tronqué si trop long.
  */
 function tronc(name) {
@@ -68,7 +68,7 @@ function tronc(name) {
 
 /**
  * Returns the text that should appear when the mouse is over a group.
- * 
+ *
  * @param data            Data from JSON file.
  * @param d               Data associated with the mouse over chord.
  * @param total           The total number of trips made for the month of August 2015.
@@ -115,7 +115,7 @@ function createChords(g, data, layout, path, color, total, formatPercent) {
 
 /**
  *  Returns the text that should appear when the mouse is over the chord.
- * 
+ *
  * @param data            Data from JSON file.
  * @param d               Data associated with the mouse over chord.
  * @param total           The total number of trips made for the month of August 2015.
@@ -127,7 +127,7 @@ function titleChord(data, d, total, formatPercent) {
   var percentSource = formatPercent(data[d.source.index].destinations[d.target.index].count/total)
   var percentTarget = formatPercent(data[d.target.index].destinations[d.source.index].count/total)
   return nameChordSource + " → " + nameChordTarget + ": " + percentSource + "\n"
-      +  nameChordTarget + " → " + nameChordSource + ": " + percentTarget 
+      +  nameChordTarget + " → " + nameChordSource + ": " + percentTarget
 }
 
 
@@ -139,7 +139,7 @@ function titleChord(data, d, total, formatPercent) {
  */
 function initializeGroupsHovered(g) {
   /* TODO:
-     - When a group is hovered, show the incoming and outgoing chords for this groups with an 80% opacity. 
+     - When a group is hovered, show the incoming and outgoing chords for this groups with an 80% opacity.
        The other chords have to drawn with an 10% opacity.
      - Reset the default style for the diagram when the user mouse's leaves the diagram's group.
   */
@@ -147,8 +147,6 @@ function initializeGroupsHovered(g) {
   .on("mouseenter", function(group) {
   g.selectAll(".chord").classed("fade", function(chord) {
     return !(group.index === chord.source.index || group.index === chord.target.index)
+     })
   })
-  })
-
 }
-

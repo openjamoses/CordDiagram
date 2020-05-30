@@ -15,7 +15,6 @@
 function createAxes(g, xAxis, yAxis, height) {
   // TODO: Draw the X and Y axis of the graphic. Make sure you put a title for the Y axis.
   // X-AXIS
-
   g.append("g")
     .classed("x axis", true)
     .attr("transform", "translate(0," + height + ")")
@@ -30,11 +29,9 @@ function createAxes(g, xAxis, yAxis, height) {
       .attr("text-anchor","middle")
       .text("Nombre de trajets")
       .style("font-size","10px");
-  
+
   // Y-AXIS
-  g.append("g")
-    .classed("y axis", true)
-    .call(yAxis)
+  g.append("g").classed("y axis", true).call(yAxis)
 }
 
 /**
@@ -92,7 +89,7 @@ function transition(g, newData, y, yAxis, height) {
    .duration(duration)
    .call(yAxis);
 }
-// 
+//
 /**
  * Returns the appropriate text for the tooltip.
  *
