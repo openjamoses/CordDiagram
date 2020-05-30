@@ -6,7 +6,7 @@
 
 
 /**
- * 
+ *
  * Specifies the color domain for each BIXI station.
  *
  * @param color   Color scale.
@@ -37,9 +37,7 @@ function domainX(x, data) {
 function domainY(y, currentData) {
   // TODO: Specifies the domain for the "y" axis by taking the minimum and maximum values as the number of trips to a BIXI station.
   var counts = currentData.destinations.map(d => d.count)
-  var maxTraj = d3.max(counts)
-  var minTraj = d3.min(counts) 
-  y.domain([minTraj, maxTraj])
+  y.domain([d3.min(counts) , d3.max(counts)])
 }
 
 /**

@@ -77,16 +77,15 @@ function transition(g, newData, y, yAxis, height) {
    - Complete a transition to update the Y axis and the height of the bar chart, taking into account the new data.
    - The transition has to complete in 1 second.
    */
-  var duration = 1000
   g.selectAll(".rect").data(newData.destinations)
    .transition()
-   .duration(duration)
+   .duration(1000)
    .attr("height",d => height - y(d.count))
    .attr("y", d => y(d.count))
 
   g.select(".y.axis")
    .transition()
-   .duration(duration)
+   .duration(1000)
    .call(yAxis);
 }
 //

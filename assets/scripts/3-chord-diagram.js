@@ -75,10 +75,9 @@ function tronc(name) {
  * @param formatPercent   Function allowing to correctly format a percentage from a number.
  */
 function titleGroup(data, d,total, formatPercent) {
-  var name = data[d.index].name
   var totStation = d3.sum(data[d.index].destinations.map(dest => dest.count))
   var percent = formatPercent(totStation/total)
-  return name + ": " + percent + " des départs"
+  return data[d.index].name + ": " + percent + " des départs"
 }
 
 
